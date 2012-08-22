@@ -1,12 +1,12 @@
 index index.htm index.html index.php;
 server {
-  listen <%= port %>;
+  listen 8080;
   server_name www.<%= name %>;
   rewrite ^ $scheme://<%= name %>$request_uri? permanent;
 }
 
 server {
-  listen <%= port %>;
+  listen 8080;
   server_name <%= name %>;
   access_log  /var/www/<%= name %>/logs/access.log;
   error_log   /var/www/<%= name %>/logs/error.log;
