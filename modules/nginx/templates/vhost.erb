@@ -1,0 +1,22 @@
+index index.htm index.html index.php;
+server {
+  listen <%= port %>;
+  server_name www.<%= name %>;
+  rewrite ^ $scheme://<%= name %>$request_uri? permanent;
+}
+
+server {
+  listen <%= port %>;
+  server_name <%= name %>;
+  access_log  /var/www/<%= name %>/logs/access.log;
+  error_log   /var/www/<%= name %>/logs/error.log;
+  root /var/www/<%= name %>/public;
+  location / {
+    try_files $uri $uri/ /index.php;
+  }
+  location ~ \.php$ {
+    try_files $uri = 404;
+    include fastcgi_params;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+  }
+}
