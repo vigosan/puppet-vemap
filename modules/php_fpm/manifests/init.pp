@@ -19,8 +19,16 @@ class php_fpm {
     require => Package['php5-fpm']
   }
 
-  package { ['php5-common', 'php5-mysql', 'php5-gd', 'php5-cli', 'php5-curl']:
+  package { ['php5-common', 'php5-mysql', 'php5-gd', 'php5-cli', 'php5-curl', 'php-apc']:
     ensure => present
+  }
+
+  file { '/etc/php5/conf.d/apc.ini':
+    source  => 'puppet:///modules/php_fpm/apc.ini',
+    mode    => 644,
+    owner   => root,
+    group   => root,
+    require => Package['php-apc']
   }
 
 }
